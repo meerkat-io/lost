@@ -2,12 +2,12 @@ namespace DustTest.Utils;
 using Dust.Utils;
 
 [TestClass]
-public class StorageTest
+public class ComponentStorageTest
 {
     [TestMethod]
     public void TestValueUpdate()
     {
-        var storage = new Storage<int>();
+        var storage = new ComponentStorage<int>();
         var index = storage.Create();
         Assert.AreEqual(0, storage[index]);
         ref var value = ref storage[index];
@@ -18,7 +18,7 @@ public class StorageTest
     [TestMethod]
     public void TestRecycle()
     {
-        var storage = new Storage<int>();
+        var storage = new ComponentStorage<int>();
         var index = storage.Create();
         storage[index] = 42;
         storage.Recycle(index);
@@ -30,7 +30,7 @@ public class StorageTest
     [TestMethod]
     public void TestCapacity()
     {
-        var storage = new Storage<int>();
+        var storage = new ComponentStorage<int>();
         for (var i = 0; i < 8; i++)
         {
             storage.Create();
@@ -43,7 +43,7 @@ public class StorageTest
     [TestMethod]
     public void TestRecycleCapacity()
     {
-        var storage = new Storage<int>();
+        var storage = new ComponentStorage<int>();
         for (var i = 0; i < 8; i++)
         {
             storage.Create();

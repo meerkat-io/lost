@@ -2,14 +2,14 @@ namespace Dust.Utils;
 
 using System.Collections.Generic;
 
-public class Storage<T> where T : struct
+public class ComponentStorage<T> where T : struct
 {
     private int _capacity = 8;
     private int _cursor = 0;
     private T[] _storage;
     private readonly Stack<int> _recycled = new();
 
-    public Storage()
+    public ComponentStorage()
     {
         _storage = new T[_capacity];
         Array.Fill(_storage, default);
