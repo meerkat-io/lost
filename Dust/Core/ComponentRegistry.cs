@@ -12,12 +12,15 @@ internal class ComponentRegistry
         {
             throw new IndexOutOfRangeException("Component registry is full");
         }
+
         if (GetIndex<T>() != -1)
         {
             throw new DuplicateComponentException("Component type already registered");
         }
+
         var index = _cursor++;
         _registry[index] = typeof(T).GetHashCode();
+
         return index;
     }
 
@@ -31,6 +34,7 @@ internal class ComponentRegistry
                 return i;
             }
         }
+        
         return -1;
     }
 }

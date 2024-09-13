@@ -28,6 +28,7 @@ internal class ComponentChunk<T> where T : struct
             Array.Resize(ref _chunk, _capacity);
         }
         _chunk[_cursor] = default;
+        
         return _cursor++;
     }
 

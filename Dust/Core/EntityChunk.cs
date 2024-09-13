@@ -7,7 +7,7 @@ internal class EntityChunk
     private readonly int _componentCount = 0;
     private int _capacity = 8;
     private int _cursor = 0;
-    private int[] _masks;
+    private EntityMask[] _masks;
     private int[,] _componentIndexes;
     private readonly Stack<int> _recycled = new();
 
@@ -15,7 +15,7 @@ internal class EntityChunk
     {
         _componentCount = componentCount;
         _componentIndexes = new int[_capacity, _componentCount];
-        _masks = new int[_capacity];
+        _masks = new EntityMask[_capacity];
     }
 
     internal unsafe Entity Create()
@@ -46,22 +46,21 @@ internal class EntityChunk
 
             index = _cursor++;
         }
-        for (var i = 0; i < _componentCount; i++)
-        {
-            _componentIndexes[index, i] = -1;
-        }
 
         fixed (int* ptr = _componentIndexes)
         {
             Span<int> rowSpan = new(ptr + index * _componentCount, _componentCount);
             rowSpan.Fill(-1);
         }
-        _masks[index] = 1; // Entity is alive (bit 0)
+        _masks[index].Clear();
+        _masks[index].Activate();
+
         return new Entity(index);
     }
 
     internal void Recycle(Entity entity)
     {
+        _masks[entity.Id].Deactivate();
         _recycled.Push(entity.Id);
     }
 
@@ -73,7 +72,7 @@ internal class EntityChunk
         }
     }
 
-    internal ref int GetMask(Entity entity)
+    internal ref EntityMask GetMask(Entity entity)
     {
         return ref _masks[entity.Id];
     }
