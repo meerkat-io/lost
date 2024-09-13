@@ -2,7 +2,7 @@ namespace Dust.Core;
 
 internal class ComponentRegistry
 {
-    private const int _maxComponents = 32;
+    private const int _maxComponents = 31;
     private int _cursor = 0;
     private readonly int[] _registry = new int[_maxComponents];
 

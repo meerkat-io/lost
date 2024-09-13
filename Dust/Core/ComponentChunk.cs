@@ -12,13 +12,13 @@ internal class ComponentChunk<T> where T : struct
     internal ComponentChunk()
     {
         _chunk = new T[_capacity];
-        Array.Fill(_chunk, default);
     }
 
     internal int Create()
     {
         if (_recycled.Count > 0)
         {
+            _chunk[_recycled.Peek()] = default;
             return _recycled.Pop();
         }
 
@@ -27,13 +27,12 @@ internal class ComponentChunk<T> where T : struct
             _capacity *= 2;
             Array.Resize(ref _chunk, _capacity);
         }
-
+        _chunk[_cursor] = default;
         return _cursor++;
     }
 
     internal void Recycle(int index)
     {
-        _chunk[index] = default;
         _recycled.Push(index);
     }
 

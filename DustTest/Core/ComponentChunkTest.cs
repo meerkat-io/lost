@@ -6,11 +6,12 @@ using Dust.Core;
 public class ComponentChunkTest
 {
     [TestMethod]
-    public void TestValueUpdate()
+    public void TestUpdateValue()
     {
         var storage = new ComponentChunk<int>();
         var index = storage.Create();
         Assert.AreEqual(0, storage[index]);
+
         ref var value = ref storage[index];
         value = 42;
         Assert.AreEqual(42, storage[index]);
@@ -24,6 +25,7 @@ public class ComponentChunkTest
         storage[index] = 42;
         storage.Recycle(index);
         Assert.AreEqual(0, storage[index]);
+
         var newIndex = storage.Create();
         Assert.AreEqual(index, newIndex);
     }
@@ -37,6 +39,7 @@ public class ComponentChunkTest
             storage.Create();
         }
         Assert.AreEqual(8, storage.Capacity);
+
         storage.Create();
         Assert.AreEqual(16, storage.Capacity);
     }
@@ -50,12 +53,14 @@ public class ComponentChunkTest
             storage.Create();
         }
         Assert.AreEqual(8, storage.Capacity);
+
         for (var i = 0; i < 8; i++)
         {
             storage.Recycle(i);
         }
         Assert.AreEqual(8, storage.Capacity);
-                for (var i = 0; i < 8; i++)
+
+        for (var i = 0; i < 8; i++)
         {
             storage.Create();
         }

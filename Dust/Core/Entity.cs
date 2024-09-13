@@ -3,11 +3,9 @@ namespace Dust.Core;
 public struct Entity
 {
     internal int Id;
-    internal int ComponentMask;
 
-    internal Entity(int id, int componentMask)
+    internal Entity(int id)
     {
         Id = id;
-        ComponentMask = componentMask;
     }
 }
