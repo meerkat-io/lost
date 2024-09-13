@@ -29,6 +29,12 @@ public class ComponentRegistryTest
         var registry = new ComponentRegistry();
         registry.Register<int>();
         Assert.AreEqual(0, registry.GetIndex<int>());
-        Assert.AreEqual(-1, registry.GetIndex<float>());
+    }
+
+    [TestMethod]
+    public void TestGetIndexNotFound()
+    {
+        var registry = new ComponentRegistry();
+        Assert.ThrowsException<KeyNotFoundException>(() => registry.GetIndex<int>());
     }
 }
