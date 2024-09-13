@@ -4,7 +4,7 @@ namespace Dust.Core;
 /// Represents components bit mask in an Entity.
 /// </summary>
 /// Mask format: LOW 0bit entity activated HIGH 1-31bit component switches
-public struct EntityMask
+internal struct EntityMask
 {
     internal int Mask;
 
