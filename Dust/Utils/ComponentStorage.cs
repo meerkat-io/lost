@@ -2,20 +2,20 @@ namespace Dust.Utils;
 
 using System.Collections.Generic;
 
-public class ComponentStorage<T> where T : struct
+internal class ComponentStorage<T> where T : struct
 {
     private int _capacity = 8;
     private int _cursor = 0;
     private T[] _storage;
     private readonly Stack<int> _recycled = new();
 
-    public ComponentStorage()
+    internal ComponentStorage()
     {
         _storage = new T[_capacity];
         Array.Fill(_storage, default);
     }
 
-    public int Create()
+    internal int Create()
     {
         if (_recycled.Count > 0)
         {
@@ -31,16 +31,16 @@ public class ComponentStorage<T> where T : struct
         return _cursor++;
     }
 
-    public void Recycle(int index)
+    internal void Recycle(int index)
     {
         _storage[index] = default;
         _recycled.Push(index);
     }
 
-    public ref T this[int index]
+    internal ref T this[int index]
     {
         get => ref _storage[index];
     }
 
-    public int Capacity => _capacity;
+    internal int Capacity => _capacity;
 }

@@ -1,4 +1,5 @@
 namespace DustTest.Utils;
+
 using Dust.Utils;
 
 [TestClass]
