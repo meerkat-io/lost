@@ -1,18 +1,18 @@
-namespace Dust.Utils;
+namespace Dust.Core;
 
 using System.Collections.Generic;
 
-internal class ComponentStorage<T> where T : struct
+internal class ComponentChunk<T> where T : struct
 {
     private int _capacity = 8;
     private int _cursor = 0;
-    private T[] _storage;
+    private T[] _chunk;
     private readonly Stack<int> _recycled = new();
 
-    internal ComponentStorage()
+    internal ComponentChunk()
     {
-        _storage = new T[_capacity];
-        Array.Fill(_storage, default);
+        _chunk = new T[_capacity];
+        Array.Fill(_chunk, default);
     }
 
     internal int Create()
@@ -25,7 +25,7 @@ internal class ComponentStorage<T> where T : struct
         if (_cursor == _capacity)
         {
             _capacity *= 2;
-            Array.Resize(ref _storage, _capacity);
+            Array.Resize(ref _chunk, _capacity);
         }
 
         return _cursor++;
@@ -33,13 +33,13 @@ internal class ComponentStorage<T> where T : struct
 
     internal void Recycle(int index)
     {
-        _storage[index] = default;
+        _chunk[index] = default;
         _recycled.Push(index);
     }
 
     internal ref T this[int index]
     {
-        get => ref _storage[index];
+        get => ref _chunk[index];
     }
 
     internal int Capacity => _capacity;
