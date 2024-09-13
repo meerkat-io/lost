@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lost", "Lost\Lost.csproj", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dust", "Dust\Dust.csproj", "{0F40B673-F5B2-49E3-B92E-5A657387AF9E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DustTest", "DustTest\DustTest.csproj", "{30DC0486-D597-4A71-89D1-A62336A255C1}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -24,5 +26,9 @@ Global
 		{0F40B673-F5B2-49E3-B92E-5A657387AF9E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0F40B673-F5B2-49E3-B92E-5A657387AF9E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0F40B673-F5B2-49E3-B92E-5A657387AF9E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{30DC0486-D597-4A71-89D1-A62336A255C1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{30DC0486-D597-4A71-89D1-A62336A255C1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{30DC0486-D597-4A71-89D1-A62336A255C1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{30DC0486-D597-4A71-89D1-A62336A255C1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
