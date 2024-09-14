@@ -2,9 +2,9 @@ namespace Dust.Core;
 
 public class Query
 {
-    internal int _componentMask;
-    internal Query(int componentMask)
+    internal EntityMask _mask;
+    internal Query()
     {
-        _componentMask = componentMask;
+        // need Dust to iterate over all entities
     }
 }

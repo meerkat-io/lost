@@ -1,16 +1,23 @@
 namespace Dust;
 
+using Core;
+
 public class Dust
 {
-    private bool _isRunning = true;
-    public static void Main()
+    private bool _initilized = false;
+    private Entity entity;
+
+
+    public Dust()
     {
-        var registry = new Core.ComponentRegistry();
-        var index = registry.Register<int>();
-        Console.WriteLine(index);
-        index = registry.Register<float>();
-        Console.WriteLine(index);
-        Console.WriteLine(registry.GetIndex<int>());
-        Console.WriteLine(registry.GetIndex<float>());
+    }
+
+    public void Initialize()
+    {
+        if (_initilized)
+        {
+            return;
+        }
+        _initilized = true;
     }
 }

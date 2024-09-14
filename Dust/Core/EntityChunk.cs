@@ -1,6 +1,7 @@
 namespace Dust.Core;
 
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 
 internal class EntityChunk
 {
@@ -64,6 +65,7 @@ internal class EntityChunk
         _recycled.Push(entity.Id);
     }
 
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     internal unsafe Span<int> GetComponentIndexes(Entity entity)
     {
         fixed (int* ptr = _componentIndexes)
@@ -72,6 +74,7 @@ internal class EntityChunk
         }
     }
 
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     internal ref EntityMask GetMask(Entity entity)
     {
         return ref _masks[entity.Id];

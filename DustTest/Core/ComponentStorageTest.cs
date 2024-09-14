@@ -3,47 +3,49 @@ namespace DustTest.Core;
 using Dust.Core;
 
 [TestClass]
-public class ComponentChunkTest
+public class ComponentStorageTest
 {
     [TestMethod]
     public void TestUpdateComponent()
     {
-        var storage = new ComponentChunk<int>();
+        var storage = new ComponentStorage(typeof(int));
         var index = storage.Create();
-        Assert.AreEqual(0, storage[index]);
+        Assert.AreEqual(0, storage.GetItem<int>(index));
 
-        ref var component = ref storage[index];
+        ref var component = ref storage.GetItem<int>(index);
         component = 42;
-        Assert.AreEqual(42, storage[index]);
+        Assert.AreEqual(42, storage.GetItem<int>(index));
     }
 
     [TestMethod]
     public void TestRecycle()
     {
-        var storage = new ComponentChunk<int>();
+        var storage = new ComponentStorage(typeof(int));
         var index = storage.Create();
-        storage[index] = 42;
+        ref var component = ref storage.GetItem<int>(index);
+        component = 42;
         storage.Recycle(index);
         var newIndex = storage.Create();
-        Assert.AreEqual(0, storage[newIndex]);
+        Assert.AreEqual(0, storage.GetItem<int>(newIndex));
         Assert.AreEqual(index, newIndex);
     }
 
     [TestMethod]
     public void TestCapacity()
     {
-        var storage = new ComponentChunk<int>();
+        var storage = new ComponentStorage(typeof(int));
         for (var i = 0; i < 8; i++)
         {
             var index = storage.Create();
-            storage[index] = i;
+            ref var component = ref storage.GetItem<int>(index);
+            component = i;
         }
         Assert.AreEqual(8, storage.Capacity);
 
         var newIndex = storage.Create();
         for (var i = 0; i < 8; i++)
         {
-            Assert.AreEqual(i, storage[i]);
+            Assert.AreEqual(i, storage.GetItem<int>(i));
         }
         Assert.AreEqual(16, storage.Capacity);
     }
@@ -51,7 +53,7 @@ public class ComponentChunkTest
     [TestMethod]
     public void TestRecycleCapacity()
     {
-        var storage = new ComponentChunk<int>();
+        var storage = new ComponentStorage(typeof(int));
         for (var i = 0; i < 8; i++)
         {
             storage.Create();
