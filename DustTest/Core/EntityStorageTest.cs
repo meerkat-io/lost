@@ -12,18 +12,15 @@ public class EntityStorageTest
         var entity = storage.Create();
         Assert.AreEqual(0, entity.Id);
         Assert.IsTrue(storage.GetMask(entity).IsActive());
-
-        var componentIndexes = storage.GetComponents(entity);
-        Assert.AreEqual(-1, componentIndexes[0]);
+        Assert.AreEqual(-1, storage.GetComponentIndex(entity, new ComponentId(0)));
 
         storage.GetMask(entity).Set(0);
         Assert.IsTrue(storage.GetMask(entity).IsSet(0));
         storage.GetMask(entity).Set(30);
         Assert.IsTrue(storage.GetMask(entity).IsSet(30));
 
-        componentIndexes[0] = 42;
-        var componentIndexes2 = storage.GetComponents(entity);
-        Assert.AreEqual(42, componentIndexes2[0]);
+        storage.AddComponent(entity, new ComponentId(0), 42);
+        Assert.AreEqual(42, storage.GetComponentIndex(entity, new ComponentId(0)));
 
         var entity2 = storage.Create();
         Assert.AreEqual(1, entity2.Id);
@@ -36,16 +33,14 @@ public class EntityStorageTest
         var storage = new EntityStorage(2);
         var entity = storage.Create();
         storage.GetMask(entity).Set(0);
-        var components = storage.GetComponents(entity);
-        components[0] = 42;
+        storage.AddComponent(entity, new ComponentId(0), 42);
         storage.Recycle(entity);
         Assert.IsFalse(storage.GetMask(entity).IsActive());
 
         var entity2 = storage.Create();
-        var components2 = storage.GetComponents(entity2);
         Assert.AreEqual(0, entity2.Id);
         Assert.IsTrue(storage.GetMask(entity2).IsActive());
-        Assert.AreEqual(-1, components2[0]);
+        Assert.AreEqual(-1, storage.GetComponentIndex(entity2, new ComponentId(0)));
         Assert.IsFalse(storage.GetMask(entity2).IsSet(0));
     }
 
@@ -57,8 +52,7 @@ public class EntityStorageTest
         {
             var entity = storage.Create();
             storage.GetMask(entity).Set(0);
-            var components = storage.GetComponents(entity);
-            components[0] = i;
+            storage.AddComponent(entity, new ComponentId(0), i);
         }
         Assert.AreEqual(8, storage.Capacity);
 
@@ -67,8 +61,7 @@ public class EntityStorageTest
         for (var i = 0; i < 8; i++)
         {
             var entity = new Entity(i);
-            var components = storage.GetComponents(entity);
-            Assert.AreEqual(i, components[0]);
+            Assert.AreEqual(i, storage.GetComponentIndex(entity, new ComponentId(0)));
             Assert.IsTrue(storage.GetMask(entity).IsSet(0));
         }
     }
@@ -95,5 +88,16 @@ public class EntityStorageTest
             storage.Create();
         }
         Assert.AreEqual(8, storage.Capacity);
+    }
+
+    [TestMethod]
+    public void TestAddComponent()
+    {
+        var storage = new EntityStorage(2);
+        var entity = storage.Create();
+        storage.AddComponent(entity, new ComponentId(0), 1);
+        Assert.IsTrue(storage.GetMask(entity).IsSet(0));
+        Assert.IsTrue(storage.HasComponent(entity, new ComponentId(0)));
+        Assert.AreEqual(1, storage.GetComponentIndex(entity, new ComponentId(0)));
     }
 }

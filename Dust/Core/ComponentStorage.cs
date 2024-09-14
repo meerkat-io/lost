@@ -2,19 +2,18 @@ namespace Dust.Core;
 
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
-using System.Runtime.InteropServices;
 
 internal class ComponentStorage
 {
     private int _capacity = 8;
     private int _cursor = 0;
-    private int _componentSize = 0;
+    private readonly int _componentSize;
     private Memory<byte> _storage;
     private readonly Stack<int> _recycled = new();
 
-    internal ComponentStorage(Type componentType)
+    internal ComponentStorage(int componentSize)
     {
-        _componentSize = Marshal.SizeOf(componentType);
+        _componentSize = componentSize;
         _storage = new Memory<byte>(new byte[_capacity * _componentSize]);
     }
 

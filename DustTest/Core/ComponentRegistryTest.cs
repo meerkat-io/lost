@@ -1,5 +1,6 @@
 namespace DustTest.Core;
 
+using System.Runtime.CompilerServices;
 using Dust.Core;
 
 [TestClass]
@@ -24,7 +25,7 @@ public class ComponentRegistryTest
     }
 
     [TestMethod]
-    public void TestGetIndex()
+    public void TestGetComponentId()
     {
         var registry = new ComponentRegistry();
         registry.Register<int>();
@@ -32,9 +33,28 @@ public class ComponentRegistryTest
     }
 
     [TestMethod]
-    public void TestGetIndexNotFound()
+    public void TestGetComponentIdNotFound()
     {
         var registry = new ComponentRegistry();
         Assert.ThrowsException<KeyNotFoundException>(() => registry.GetComponentId<int>());
+    }
+
+    [TestMethod]
+    public void TestCount()
+    {
+        var registry = new ComponentRegistry();
+        Assert.AreEqual(0, registry.Count);
+        registry.Register<int>();
+        Assert.AreEqual(1, registry.Count);
+        registry.Register<float>();
+        Assert.AreEqual(2, registry.Count);
+    }
+
+    [TestMethod]
+    public void TestGetComponentSize()
+    {
+        var registry = new ComponentRegistry();
+        registry.Register<int>();
+        Assert.AreEqual(Unsafe.SizeOf<int>(), registry.GetComponentSize(new ComponentId(0)));
     }
 }

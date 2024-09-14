@@ -21,7 +21,7 @@ internal class EntityStorage
 
     internal unsafe Entity Create()
     {
-        int index = -1;
+        int index;
         if (_recycled.Count > 0)
         {
             index = _recycled.Pop();
@@ -57,15 +57,28 @@ internal class EntityStorage
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    internal Span<int> GetComponents(Entity entity)
-    {
-        return _components.Span.Slice(entity.Id * _componentCount, _componentCount);
-    }
-
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     internal ref EntityMask GetMask(Entity entity)
     {
         return ref _masks[entity.Id];
+    }
+
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    internal void AddComponent(Entity entity, ComponentId componentId, int componentIndex)
+    {
+        _components.Span[entity.Id * _componentCount + componentId.Index] = componentIndex;
+        _masks[entity.Id].Set(componentId.Index);
+    }
+
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    internal bool HasComponent(Entity entity, ComponentId componentId)
+    {
+        return _components.Span[entity.Id * _componentCount + componentId.Index] != -1;
+    }
+
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    internal int GetComponentIndex(Entity entity, ComponentId componentId)
+    {
+        return _components.Span[entity.Id * _componentCount + componentId.Index];
     }
 
     internal int Capacity => _capacity;

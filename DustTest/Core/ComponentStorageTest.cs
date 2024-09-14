@@ -1,5 +1,6 @@
 namespace DustTest.Core;
 
+using System.Runtime.CompilerServices;
 using Dust.Core;
 
 [TestClass]
@@ -8,7 +9,7 @@ public class ComponentStorageTest
     [TestMethod]
     public void TestUpdateComponent()
     {
-        var storage = new ComponentStorage(typeof(int));
+        var storage = new ComponentStorage(Unsafe.SizeOf<int>());
         var index = storage.Create();
         Assert.AreEqual(0, storage.GetItem<int>(index));
 
@@ -20,7 +21,7 @@ public class ComponentStorageTest
     [TestMethod]
     public void TestRecycle()
     {
-        var storage = new ComponentStorage(typeof(int));
+        var storage = new ComponentStorage(Unsafe.SizeOf<int>());
         var index = storage.Create();
         ref var component = ref storage.GetItem<int>(index);
         component = 42;
@@ -33,7 +34,7 @@ public class ComponentStorageTest
     [TestMethod]
     public void TestCapacity()
     {
-        var storage = new ComponentStorage(typeof(int));
+        var storage = new ComponentStorage(Unsafe.SizeOf<int>());
         for (var i = 0; i < 8; i++)
         {
             var index = storage.Create();
@@ -53,7 +54,7 @@ public class ComponentStorageTest
     [TestMethod]
     public void TestRecycleCapacity()
     {
-        var storage = new ComponentStorage(typeof(int));
+        var storage = new ComponentStorage(Unsafe.SizeOf<int>());
         for (var i = 0; i < 8; i++)
         {
             storage.Create();
