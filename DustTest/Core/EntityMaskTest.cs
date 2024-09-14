@@ -8,7 +8,7 @@ public class EntityMaskTest
     [TestMethod]
     public void TestActive()
     {
-        var mask = new EntityMask(0);
+        var mask = new EntityMask(false);
         Assert.IsFalse(mask.IsActive());
 
         mask.Activate();
@@ -21,7 +21,7 @@ public class EntityMaskTest
     [TestMethod]
     public void TestSet()
     {
-        var mask = new EntityMask(0);
+        var mask = new EntityMask(false);
         Assert.IsFalse(mask.IsSet(0));
 
         mask.Set(0);
@@ -34,8 +34,8 @@ public class EntityMaskTest
     [TestMethod]
     public void TestContains()
     {
-        var mask1 = new EntityMask(0);
-        var mask2 = new EntityMask(0);
+        var mask1 = new EntityMask(false);
+        var mask2 = new EntityMask(false);
         Assert.IsTrue(mask1.Contains(mask2));
         Assert.IsTrue(mask2.Contains(mask1));
 
@@ -59,7 +59,7 @@ public class EntityMaskTest
     [TestMethod]
     public void TestClear()
     {
-        var mask = new EntityMask(0);
+        var mask = new EntityMask(false);
         mask.Activate();
         mask.Set(0);
         mask.Set(1);

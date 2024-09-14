@@ -10,38 +10,26 @@ internal struct EntityMask
 {
     internal int Mask;
 
-    internal EntityMask(int mask)
+    internal EntityMask(bool activated)
     {
-        Mask = mask;
+        Mask = activated ? 1 : 0;
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     internal void Set(int index)
     {
-        if (index > 30 || index < 0)
-        {
-            throw new IndexOutOfRangeException("Component bit index out of range");
-        }
         Mask |= 1 << index + 1;
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     internal void Unset(int index)
     {
-        if (index > 30 || index < 0)
-        {
-            throw new IndexOutOfRangeException("Component bit index out of range");
-        }
         Mask &= ~(1 << index + 1);
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     internal readonly bool IsSet(int index)
     {
-        if (index > 30 || index < 0)
-        {
-            throw new IndexOutOfRangeException("Component bit index out of range");
-        }
         return (Mask & 1 << index + 1) != 0;
     }
 
