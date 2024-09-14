@@ -9,10 +9,10 @@ public class ComponentRegistryTest
     public void TestRegister()
     {
         var registry = new ComponentRegistry();
-        var index = registry.Register<int>();
-        Assert.AreEqual(0, index);
-        index = registry.Register<float>();
-        Assert.AreEqual(1, index);
+        var componentId = registry.Register<int>();
+        Assert.AreEqual(0, componentId.Index);
+        componentId = registry.Register<float>();
+        Assert.AreEqual(1, componentId.Index);
     }
 
     [TestMethod]
@@ -28,13 +28,13 @@ public class ComponentRegistryTest
     {
         var registry = new ComponentRegistry();
         registry.Register<int>();
-        Assert.AreEqual(0, registry.GetIndex<int>());
+        Assert.AreEqual(0, registry.GetComponentId<int>().Index);
     }
 
     [TestMethod]
     public void TestGetIndexNotFound()
     {
         var registry = new ComponentRegistry();
-        Assert.ThrowsException<KeyNotFoundException>(() => registry.GetIndex<int>());
+        Assert.ThrowsException<KeyNotFoundException>(() => registry.GetComponentId<int>());
     }
 }

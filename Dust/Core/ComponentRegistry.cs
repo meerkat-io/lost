@@ -6,7 +6,7 @@ internal class ComponentRegistry
     private int _cursor = 0;
     private readonly int[] _registry = new int[_maxComponents];
 
-    internal int Register<T>() where T : struct
+    internal ComponentId Register<T>() where T : struct
     {
         if (_cursor == _maxComponents)
         {
@@ -25,17 +25,17 @@ internal class ComponentRegistry
         var index = _cursor++;
         _registry[index] = hashCode;
 
-        return index;
+        return new ComponentId(index);
     }
 
-    internal int GetIndex<T>() where T : struct
+    internal ComponentId GetComponentId<T>() where T : struct
     {
         var hashCode = typeof(T).GetHashCode();
         for (var i = 0; i < _cursor; i++)
         {
             if (_registry[i] == hashCode)
             {
-                return i;
+                return new ComponentId(i);
             }
         }
         
