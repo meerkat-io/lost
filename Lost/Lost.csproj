@@ -11,11 +11,15 @@
   <PropertyGroup>
     <TargetFramework>net8.0</TargetFramework>
     <PublishAot>true</PublishAot>
-    <RuntimeIdentifier>osx-arm64</RuntimeIdentifier>
     <SelfContained>true</SelfContained>
     <OutputType>Exe</OutputType>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
+
+    <RuntimeIdentifier>osx-arm64</RuntimeIdentifier>
+    <RuntimeIdentifier>win-x64</RuntimeIdentifier>
+    <RuntimeIdentifier>linux-x64</RuntimeIdentifier>
+    <RuntimeIdentifier>osx-x64</RuntimeIdentifier>
   </PropertyGroup>
 
 </Project>
