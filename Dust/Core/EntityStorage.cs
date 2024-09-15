@@ -19,7 +19,7 @@ internal class EntityStorage
         _masks = new EntityMask[_capacity];
     }
 
-    internal unsafe Entity Create()
+    internal Entity Create()
     {
         int index;
         if (_recycled.Count > 0)
