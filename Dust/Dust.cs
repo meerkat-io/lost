@@ -43,10 +43,60 @@ public class Dust
         var entity = _entities!.Create();
         foreach (var component in components)
         {
-            //_entities!.AddComponent(entity, componentId);
+            var index = _components![component.Index].Create();
+            _entities!.AddComponent(entity, component, index);
         }
         return entity;
     }
+
+    //RemoveEntity
+
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public void AddComponent(Entity entity, ComponentId component)
+    {
+        CheckInitialized();
+
+        if (_entities!.HasComponent(entity, component))
+        {
+            throw new InvalidOperationException("Component has not been registered.");
+        }
+        var index = _components![component.Index].Create();
+        _entities!.AddComponent(entity, component, index);
+    }
+
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public ref T GetComponent<T>(Entity entity, ComponentId componentId) where T : struct
+    {
+        CheckInitialized();
+
+        var componentIndex = _entities!.GetComponentIndex(entity, componentId);
+        if (componentIndex == -1)
+        {
+            throw new InvalidOperationException("Entity does not have component.");
+        }
+        return ref _components![componentId.Index].GetItem<T>(componentIndex);
+    }
+
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public void RemoveComponent(Entity entity, ComponentId component)
+    {
+        CheckInitialized();
+
+        if (!_entities!.HasComponent(entity, component))
+        {
+            throw new InvalidOperationException("Entity does not have component.");
+        }
+        var componentIndex = _entities!.GetComponentIndex(entity, component);
+        _components![component.Index].Recycle(componentIndex);
+        _entities!.RemoveComponent(entity, component);
+    }
+
+    //CreateQuery
+    //DisposeQuery
+    //ForEach (Query, Action<Entity>)
+
+    //ForEach all entities
+    //CountEntities
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     private void CheckInitialized()

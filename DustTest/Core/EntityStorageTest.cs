@@ -91,7 +91,7 @@ public class EntityStorageTest
     }
 
     [TestMethod]
-    public void TestAddComponent()
+    public void TestComponentOperation()
     {
         var storage = new EntityStorage(2);
         var entity = storage.Create();
@@ -99,5 +99,10 @@ public class EntityStorageTest
         Assert.IsTrue(storage.GetMask(entity).IsSet(0));
         Assert.IsTrue(storage.HasComponent(entity, new ComponentId(0)));
         Assert.AreEqual(1, storage.GetComponentIndex(entity, new ComponentId(0)));
+
+        storage.RemoveComponent(entity, new ComponentId(0));
+        Assert.IsFalse(storage.GetMask(entity).IsSet(0));
+        Assert.IsFalse(storage.HasComponent(entity, new ComponentId(0)));
+        Assert.AreEqual(-1, storage.GetComponentIndex(entity, new ComponentId(0)));
     }
 }

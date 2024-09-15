@@ -72,7 +72,14 @@ internal class EntityStorage
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     internal bool HasComponent(Entity entity, ComponentId componentId)
     {
-        return _components.Span[entity.Id * _componentCount + componentId.Index] != -1;
+        return _masks[entity.Id].IsSet(componentId.Index);
+    }
+
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    internal void RemoveComponent(Entity entity, ComponentId componentId)
+    {
+        _components.Span[entity.Id * _componentCount + componentId.Index] = -1;
+        _masks[entity.Id].Unset(componentId.Index);
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]

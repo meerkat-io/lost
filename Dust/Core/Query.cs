@@ -7,5 +7,7 @@ public class Query
     internal Query()
     {
         // need Dust to iterate over all entities
+        // add cache
+        // update cache when entities are added or removed
     }
 }

@@ -15,6 +15,15 @@ internal struct EntityMask
         Mask = activated ? 1 : 0;
     }
 
+    internal EntityMask(bool activated, params ComponentId[] components)
+    {
+        Mask = activated ? 1 : 0;
+        foreach (var component in components)
+        {
+            Mask |= 1 << component.Index + 1;
+        }
+    }
+
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     internal void Set(int index)
     {
