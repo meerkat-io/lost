@@ -7,8 +7,8 @@ public class Dust
 {
     private bool _initilized = false;
     private readonly ComponentRegistry _registry = new();
-    private EntityStorage? _entities = null;
-    private ComponentStorage[]? _components = null;
+    private EntityStorage _entities = null!;
+    private ComponentStorage[] _components = null!;
 
     public ComponentId RegisterComponent<T>() where T : struct
     {
@@ -40,11 +40,11 @@ public class Dust
     {
         CheckInitialized();
 
-        var entity = _entities!.Create();
+        var entity = _entities.Create();
         foreach (var component in components)
         {
             var index = _components![component.Index].Create();
-            _entities!.AddComponent(entity, component, index);
+            _entities.AddComponent(entity, component, index);
         }
         return entity;
     }
@@ -53,19 +53,19 @@ public class Dust
     {
         CheckInitialized();
 
-        if (!_entities!.IsActive(entity))
+        if (!_entities.IsActive(entity))
         {
             throw new InvalidOperationException("Entity does not exist or recycled.");
         }
-        EntityMask mask = _entities!.GetMask(entity);
+        EntityMask mask = _entities.GetMask(entity);
         for (var i = 0; i < _registry.Count; i++)
         {
             if (mask.IsSet(i))
             {
-                _components![i].Recycle(_entities!.GetComponentIndex(entity, new ComponentId(i)));
+                _components![i].Recycle(_entities.GetComponentIndex(entity, new ComponentId(i)));
             }
         }
-        _entities!.Recycle(entity);
+        _entities.Recycle(entity);
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -73,12 +73,12 @@ public class Dust
     {
         CheckInitialized();
 
-        if (_entities!.HasComponent(entity, component))
+        if (_entities.HasComponent(entity, component))
         {
             throw new InvalidOperationException("Component has not been registered.");
         }
         var index = _components![component.Index].Create();
-        _entities!.AddComponent(entity, component, index);
+        _entities.AddComponent(entity, component, index);
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -86,7 +86,7 @@ public class Dust
     {
         CheckInitialized();
 
-        var componentIndex = _entities!.GetComponentIndex(entity, componentId);
+        var componentIndex = _entities.GetComponentIndex(entity, componentId);
         if (componentIndex == -1)
         {
             throw new InvalidOperationException("Entity does not have component.");
@@ -99,13 +99,13 @@ public class Dust
     {
         CheckInitialized();
 
-        if (!_entities!.HasComponent(entity, component))
+        if (!_entities.HasComponent(entity, component))
         {
             throw new InvalidOperationException("Entity does not have component.");
         }
-        var componentIndex = _entities!.GetComponentIndex(entity, component);
+        var componentIndex = _entities.GetComponentIndex(entity, component);
         _components![component.Index].Recycle(componentIndex);
-        _entities!.RemoveComponent(entity, component);
+        _entities.RemoveComponent(entity, component);
     }
 
     public Query CreateQuery(params ComponentId[] components)
@@ -120,7 +120,7 @@ public class Dust
     {
         CheckInitialized();
 
-        _entities!.ForEach(action);
+        _entities.ForEach(action);
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -128,14 +128,14 @@ public class Dust
     {
         CheckInitialized();
 
-        _entities!.ForEach(query, action);
+        _entities.ForEach(query, action);
     }
 
     public int CountEntities()
     {
         CheckInitialized();
 
-        return _entities!.CountEntities();
+        return _entities.CountEntities();
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
