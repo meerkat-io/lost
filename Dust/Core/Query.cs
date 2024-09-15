@@ -1,13 +1,11 @@
 namespace Dust.Core;
 
-public class Query
+public struct Query
 {
     internal EntityMask _mask;
     
-    internal Query()
+    internal Query(params ComponentId[] components)
     {
-        // need Dust to iterate over all entities
-        // add cache
-        // update cache when entities are added or removed
+        _mask = new EntityMask(true, components);
     }
 }

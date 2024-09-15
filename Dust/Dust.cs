@@ -49,7 +49,24 @@ public class Dust
         return entity;
     }
 
-    //RemoveEntity
+    public void RemoveEntity(Entity entity)
+    {
+        CheckInitialized();
+
+        if (!_entities!.IsActive(entity))
+        {
+            throw new InvalidOperationException("Entity does not exist or recycled.");
+        }
+        EntityMask mask = _entities!.GetMask(entity);
+        for (var i = 0; i < _registry.Count; i++)
+        {
+            if (mask.IsSet(i))
+            {
+                _components![i].Recycle(_entities!.GetComponentIndex(entity, new ComponentId(i)));
+            }
+        }
+        _entities!.Recycle(entity);
+    }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public void AddComponent(Entity entity, ComponentId component)
@@ -91,12 +108,35 @@ public class Dust
         _entities!.RemoveComponent(entity, component);
     }
 
-    //CreateQuery
-    //DisposeQuery
-    //ForEach (Query, Action<Entity>)
+    public Query CreateQuery(params ComponentId[] components)
+    {
+        CheckInitialized();
 
-    //ForEach all entities
-    //CountEntities
+        return new Query(components);
+    }
+
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public void ForEach(Action<Entity> action)
+    {
+        CheckInitialized();
+
+        _entities!.ForEach(action);
+    }
+
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public void ForEach(Query query, Action<Entity> action)
+    {
+        CheckInitialized();
+
+        _entities!.ForEach(query, action);
+    }
+
+    public int CountEntities()
+    {
+        CheckInitialized();
+
+        return _entities!.CountEntities();
+    }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     private void CheckInitialized()

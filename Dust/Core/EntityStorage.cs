@@ -63,6 +63,12 @@ internal class EntityStorage
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    internal bool IsActive(Entity entity)
+    {
+        return _masks[entity.Id].IsActive();
+    }
+
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     internal void AddComponent(Entity entity, ComponentId componentId, int componentIndex)
     {
         _components.Span[entity.Id * _componentCount + componentId.Index] = componentIndex;
@@ -86,6 +92,44 @@ internal class EntityStorage
     internal int GetComponentIndex(Entity entity, ComponentId componentId)
     {
         return _components.Span[entity.Id * _componentCount + componentId.Index];
+    }
+
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    internal void ForEach(Action<Entity> action)
+    {
+        for (var i = 0; i < _cursor; i++)
+        {
+            if (_masks[i].IsActive())
+            {
+                action(new Entity(i));
+            }
+        }
+    }
+
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    internal void ForEach(Query query, Action<Entity> action)
+    {
+        var mask = query._mask;
+        for (var i = 0; i < _cursor; i++)
+        {
+            if (_masks[i].Contains(mask))
+            {
+                action(new Entity(i));
+            }
+        }
+    }
+
+    internal int CountEntities()
+    {
+        var count = 0;
+        for (var i = 0; i < _cursor; i++)
+        {
+            if (_masks[i].IsActive())
+            {
+                count++;
+            }
+        }
+        return count;
     }
 
     internal int Capacity => _capacity;

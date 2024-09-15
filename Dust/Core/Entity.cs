@@ -9,5 +9,3 @@ public struct Entity
         Id = id;
     }
 }
-
-public delegate void EntityHandler(Entity entity, Dust dust);

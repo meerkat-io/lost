@@ -73,6 +73,7 @@ public class EntityStorageTest
         for (var i = 0; i < 8; i++)
         {
             storage.Create();
+            Assert.AreEqual(i + 1, storage.CountEntities());
         }
         Assert.AreEqual(8, storage.Capacity);
 
@@ -82,12 +83,14 @@ public class EntityStorageTest
             storage.Recycle(entity);
         }
         Assert.AreEqual(8, storage.Capacity);
+        Assert.AreEqual(0, storage.CountEntities());
 
         for (var i = 0; i < 8; i++)
         {
             storage.Create();
         }
         Assert.AreEqual(8, storage.Capacity);
+        Assert.AreEqual(8, storage.CountEntities());
     }
 
     [TestMethod]
@@ -104,5 +107,34 @@ public class EntityStorageTest
         Assert.IsFalse(storage.GetMask(entity).IsSet(0));
         Assert.IsFalse(storage.HasComponent(entity, new ComponentId(0)));
         Assert.AreEqual(-1, storage.GetComponentIndex(entity, new ComponentId(0)));
+    }
+
+    [TestMethod]
+    public void TestForEach()
+    {
+        var storage = new EntityStorage(2);
+        var componentId0 = new ComponentId(0);
+        var componentId1 = new ComponentId(1);
+        var entity1 = storage.Create();
+        storage.AddComponent(entity1, componentId0, 0);
+        var entity2 = storage.Create();
+        storage.AddComponent(entity2, componentId1, 0);
+        var entity3 = storage.Create();
+        storage.AddComponent(entity3, componentId0, 1);
+        storage.AddComponent(entity3, componentId1, 1);
+        var deactivated = storage.Create();
+        storage.Recycle(deactivated);
+
+        var count1 = 0;
+        storage.ForEach(e => count1++);
+        Assert.AreEqual(3, count1);
+
+        var count2 = 0;
+        storage.ForEach(new Query(componentId0), e => count2++);
+        Assert.AreEqual(2, count2);
+
+        var count3 = 0;
+        storage.ForEach(new Query(componentId1), e => count3++);
+        Assert.AreEqual(2, count3);
     }
 }
