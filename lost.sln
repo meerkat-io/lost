@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dust", "Dust\Dust.csproj", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DustTest", "DustTest\DustTest.csproj", "{30DC0486-D597-4A71-89D1-A62336A255C1}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TileCraft", "TileCraft\TileCraft.csproj", "{87BB9990-5437-469B-B050-2B95940D2D5D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -30,5 +32,9 @@ Global
 		{30DC0486-D597-4A71-89D1-A62336A255C1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{30DC0486-D597-4A71-89D1-A62336A255C1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{30DC0486-D597-4A71-89D1-A62336A255C1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{87BB9990-5437-469B-B050-2B95940D2D5D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{87BB9990-5437-469B-B050-2B95940D2D5D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{87BB9990-5437-469B-B050-2B95940D2D5D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{87BB9990-5437-469B-B050-2B95940D2D5D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
