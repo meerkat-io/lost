@@ -2,7 +2,8 @@
 
   <PropertyGroup>
     <Version>0.0.1</Version>
-    <PackageId>TileCraft</PackageId>
+    <PackageId>MeerkatIO.TileCraft</PackageId>
+    <PackageTags>tilecraft meerkat tilemap</PackageTags>
     <Authors>Meerkat</Authors>
     <Company>Meerkat.io</Company>
     <PackageReadmeFile>readme.md</PackageReadmeFile>
@@ -10,10 +11,15 @@
     <TargetFramework>net8.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
+    <OutputType>Library</OutputType>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <RepositoryUrl>https://github.com/meerkat-io/lost</RepositoryUrl>
   </PropertyGroup>
+
   <ItemGroup>
     <None Include="readme.md" Pack="true" PackagePath="\" />
   </ItemGroup>
+  
   <ItemGroup>
     <PackageReference Include="DotNet.ReproducibleBuilds" Version="1.2.25">
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>

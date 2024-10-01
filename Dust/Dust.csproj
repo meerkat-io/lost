@@ -2,7 +2,8 @@
 
   <PropertyGroup>
     <Version>0.1.0</Version>
-    <PackageId>Dust</PackageId>
+    <PackageId>MeerkatIO.Dust</PackageId>
+    <PackageTags>dust meerkat ecs</PackageTags>
     <Authors>Meerkat</Authors>
     <Company>Meerkat.io</Company>
     <PackageReadmeFile>readme.md</PackageReadmeFile>
@@ -10,11 +11,16 @@
     <TargetFramework>net8.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
+    <OutputType>Library</OutputType>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <RepositoryUrl>https://github.com/meerkat-io/lost</RepositoryUrl>
   </PropertyGroup>
+
   <ItemGroup>
     <InternalsVisibleTo Include="DustTest" />
     <None Include="readme.md" Pack="true" PackagePath="\" />
   </ItemGroup>
+  
   <ItemGroup>
     <PackageReference Include="DotNet.ReproducibleBuilds" Version="1.2.25">
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
