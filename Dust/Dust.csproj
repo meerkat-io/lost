@@ -1,6 +1,11 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
+    <Version>0.1.0</Version>
+    <PackageId>Dust</PackageId>
+    <Authors>Meerkat</Authors>
+    <Company>Meerkat.io</Company>
+
     <TargetFramework>net8.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>

@@ -1,0 +1,37 @@
+name: "Publish Dust NuGet Package"
+
+on:
+    workflow_dispatch:
+    push:
+        branches:
+        - 'main'
+    pull_request:
+        branches:
+        - '*'
+    release:
+        types:
+        - published
+
+env:
+    DOTNET_SKIP_FIRST_TIME_EXPERIENCE: 1
+    DOTNET_NOLOGO: true
+    NuGetDirectory: ${{ github.workspace }}/nuget
+
+defaults:
+    run:
+        shell: pwsh
+
+jobs:
+  create_nuget:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v3
+    - run: dotnet pack --configuration Release --output ${{ env.NuGetDirectory }}
+    - uses: actions/upload-artifact@v3
+      with:
+        name: nuget
+        if-no-files-found: error
+        retention-days: 7
+        path: ${{ env.NuGetDirectory }}/*.nupkg
