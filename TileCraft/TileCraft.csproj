@@ -1,6 +1,12 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
+    <Version>0.0.1</Version>
+    <PackageId>TileCraft</PackageId>
+    <Authors>Meerkat</Authors>
+    <Company>Meerkat.io</Company>
+    <PackageReadmeFile>readme.md</PackageReadmeFile>
+
     <TargetFramework>net8.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
