@@ -1,12 +1,12 @@
 <?xml version="1.0"?>
 <package>
   <metadata>
-    <id>MeerkatIO.Dust</id>
-    <version>0.1.0</version>
+    <id>MeerkatIO.TileCrafte</id>
+    <version>0.0.1</version>
     <authors>Meerkat</authors>
     <owners>Meerkat.io</owners>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
-    <description>This is the Dust package.</description>
+    <description>This is the TileCraft package.</description>
     <releaseNotes>Initial release.</releaseNotes>
     <copyright>Copyright © Meerkat.io</copyright>
     <tags>dust meerkat</tags>
