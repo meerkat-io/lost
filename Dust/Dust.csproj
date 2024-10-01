@@ -5,6 +5,7 @@
     <PackageId>Dust</PackageId>
     <Authors>Meerkat</Authors>
     <Company>Meerkat.io</Company>
+    <PackageReadmeFile>readme.md</PackageReadmeFile>
 
     <TargetFramework>net8.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
@@ -13,6 +14,13 @@
   </PropertyGroup>
   <ItemGroup>
     <InternalsVisibleTo Include="DustTest" />
+    <None Include="readme.md" Pack="true" PackagePath="\" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="DotNet.ReproducibleBuilds" Version="1.2.25">
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
   </ItemGroup>
 
 </Project>
